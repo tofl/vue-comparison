@@ -1,21 +1,19 @@
 {
   "name": "@tofl/vue-comparison",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "build-bundle": "vue-cli-service build --target lib --name comparison ./src/components/index.js"
+    "lint": "vue-cli-service lint"
   },
   "files": [
-    "dist/*",
     "src/*",
     "public/*",
     "*.json",
     "*.js"
   ],
-  "main": "./dist/comparison.common.js",
+  "main": "./index.js",
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"

@@ -1,3 +1,4 @@
+/*
 import Vue from 'vue';
 import SimpleComparison from './SimpleComparison.vue';
 
@@ -8,3 +9,4 @@ Object.keys(components).forEach((name) => {
 });
 
 export default components;
+*/
