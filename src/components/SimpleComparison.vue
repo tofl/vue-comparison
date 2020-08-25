@@ -8,33 +8,33 @@
         :layout="plot.layout"
         :displayModeBar="false"
       />
-      <Plotly
-        :data="plots[0].data"
-        :layout="plots[0].layout"
-        :displayModeBar="false"
-      />
     </div>
 
-    <table v-else>
-      <tr>
+    <table
+      v-else
+      :class="classes ? classes.table : ''"
+    >
+      <tr :class="classes ? classes.thead : ''">
         <th></th>
         <th
-          v-for="(column, id) in allColumns"
-          :key="id"
-        >
-          {{ column }}
-        </th>
-      </tr>
-      <tr
-        v-for="(line, id) in this.values"
-        :key="id"
-      >
-        <td>{{ line.title }}</td>
-        <td
-          v-for="(set, id) in line.data"
-          :key="id"
+          v-for="(set, key) in setNames"
+          :key="key"
         >
           {{ set }}
+        </th>
+      </tr>
+
+      <tr
+        v-for="(line, lineNumber) in tableFormat"
+        :key="lineNumber"
+        :class="classes ? classes.tr : ''"
+      >
+        <td><strong>{{ values[lineNumber].title }}</strong></td>
+        <td
+          v-for="(value, key) in line"
+          :key="key"
+        >
+          {{ value }}
         </td>
       </tr>
     </table>
@@ -64,28 +64,42 @@ export default {
     values: {
       type: Array,
       required: true,
+      // TODO add validator
+    },
+
+    classes: {
+      type: Object,
+      required: false,
     },
   },
 
   computed: {
-    allColumns() {
-      let largestSetKey = 0;
-      let max = 0;
-
-      this.values.forEach((value, id) => {
-        if (value.data.length > max) {
-          max = value.data.length;
-          largestSetKey = id;
-        }
-      });
-
-      console.log(this.values[largestSetKey].data);
+    setNames() {
       const keys = [];
-      Object.keys(this.values[largestSetKey].data).forEach((key) => {
-        keys.push(key);
+      this.values.forEach((value) => {
+        // Get all the set names
+        Object.keys(value.data).forEach((key) => {
+          if (!keys.includes(key)) keys.push(key);
+        });
       });
 
       return keys;
+    },
+
+    tableFormat() {
+      const lines = [];
+      this.values.forEach((value) => {
+        const line = [];
+        this.setNames.forEach((setName) => {
+          if (value.data[setName]) {
+            line.push(value.data[setName]);
+          } else {
+            line.push(null);
+          }
+        });
+        lines.push(line);
+      });
+      return lines;
     },
   },
 

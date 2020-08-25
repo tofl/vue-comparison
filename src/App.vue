@@ -7,6 +7,7 @@
       :title="'Test'"
       :visualisation-type="visType"
       :values="this.values"
+      :classes="classes"
     />
   </div>
 </template>
@@ -14,6 +15,14 @@
 <script>
 export default {
   name: 'App',
+
+  computed: {
+    classes() {
+      return {
+        table: 'table',
+      };
+    },
+  },
 
   data() {
     return {
@@ -24,6 +33,7 @@ export default {
           data: {
             'Set #1': 5000,
             'Set #2': 5500,
+            'Set #4': 8500,
           },
         },
         {
@@ -33,6 +43,14 @@ export default {
             'Set #2': 5501,
           },
         },
+        {
+          title: 'Hotel load (kW)',
+          data: {
+            'Set #1': 5000,
+            'Set #2': 5501,
+            'Set #3': 2000,
+          },
+        },
       ],
     };
   },
@@ -40,4 +58,7 @@ export default {
 </script>
 
 <style lang="scss">
+.table {
+  color: red;
+}
 </style>
